@@ -1,1 +1,1 @@
-web: ui
+web: ui/
