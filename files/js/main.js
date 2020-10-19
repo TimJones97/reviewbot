@@ -1,7 +1,7 @@
 var data;
 $.ajax({
   type: "GET",  
-  url: "./bot/data/gm_reviews.csv",
+  url: "./data/gm_reviews.csv",
   dataType: "text",       
   success: function(response)  
   {
