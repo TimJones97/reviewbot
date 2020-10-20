@@ -1,1 +1,3 @@
 https://www.google.com/maps/place/JB+Hi-Fi+Brisbane+-+Queen+St,+MacArthur+Central/@-27.4682544,153.0253098,17z/data=!3m1!5s0x6b915a1cbed0833f:0x658d129f320c0aad!4m7!3m6!1s0x0:0xdb823cf1ed935ed1!8m2!3d-27.4682544!4d153.0274985!9m1!1b1
+https://www.google.com/maps/place/JB+Hi-Fi+Brisbane+-+Albert+St/@-27.4698709,153.0234703,17z/data=!4m7!3m6!1s0x6b915a04b69287f5:0x3d9e2cbc4be85e1c!8m2!3d-27.4698709!4d153.025659!9m1!1b1
+https://www.google.com/maps/place/JB+Hi-Fi+Brisbane+-+Queen+Adelaide+Building/@-27.4699584,153.0223767,17z/data=!4m7!3m6!1s0x6b915a048bf711af:0x384db4dbf602edd3!8m2!3d-27.4699584!4d153.0245654!9m1!1b1

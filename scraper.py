@@ -5,12 +5,14 @@ import argparse
 import csv
 import os, boto3
 
+os.environ["AWS_ACCESS_KEY_ID"] = "AKIAJO6WIJSVQ5NT443A"
+os.environ["AWS_SECRET_ACCESS_KEY"] = "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"
 HEADER = ['id_review', 'caption', 'relative_date', 'retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user']
 HEADER_W_SOURCE = ['id_review', 'caption', 'relative_date','retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user', 'url_source']
-targetfile = open('./reviews.csv', mode='w', encoding='utf-8', newline='\n')
+targetfile = open('./reviews1.csv', mode='w', encoding='utf-8', newline='\n')
 
 def csv_writer(source_field):
-    # targetfile = open(path + outfile, mode='w', encoding='utf-8', newline='\n')
+    targetfile = open(source_field, mode='w', encoding='utf-8', newline='\n')
     writer = csv.writer(targetfile, quoting=csv.QUOTE_MINIMAL)
 
     if source_field:
@@ -26,11 +28,15 @@ def sign_s3():
     S3_BUCKET = 'jb-review-bot'
 
     # Load required data from the request
-    file_name = 'reviews.csv'
+    file_name1 = 'reviews1.csv'
+    file_name2 = 'reviews2.csv'
+    file_name3 = 'reviews3.csv'
 
     # Initialise the S3 client
     s3 = boto3.client('s3')
-    s3.upload_file(file_name, S3_BUCKET, file_name)
+    s3.upload_file(file_name1, S3_BUCKET, file_name1)
+    s3.upload_file(file_name2, S3_BUCKET, file_name2)
+    s3.upload_file(file_name3, S3_BUCKET, file_name3)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Google Maps reviews scraper.')
@@ -43,13 +49,13 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    # store reviews in CSV file
-    writer = csv_writer(args.source)
-
+    counter = 1
     with GoogleMapsScraper(debug=args.debug) as scraper:
         with open(args.i, 'r') as urls_file:
             for url in urls_file:
-
+            # store reviews in CSV file and increment file number with each URL
+                current_file = 'reviews' + str(counter) + '.csv'
+                writer = csv_writer(current_file)
                 if args.place:
                     print(scraper.get_account(url))
                 else:
@@ -68,8 +74,12 @@ if __name__ == '__main__':
                                 writer.writerow(row_data)
 
                             n += len(reviews)
+                # dirty hack to close previous reviews.csv by creating a new one
+                current_file = 'reviews' + str(counter) + '.csv'
+                writer = csv_writer(current_file)
+                counter += 1
+
             #need to close file before uploading to S3
-            targetfile.close()
             sign_s3()
 
     
