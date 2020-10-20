@@ -5,8 +5,6 @@ import argparse
 import csv
 import os, boto3
 
-os.environ["AWS_ACCESS_KEY_ID"] = "AKIAJO6WIJSVQ5NT443A"
-os.environ["AWS_SECRET_ACCESS_KEY"] = "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"
 HEADER = ['id_review', 'caption', 'relative_date', 'retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user']
 HEADER_W_SOURCE = ['id_review', 'caption', 'relative_date','retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user', 'url_source']
 targetfile = open('./reviews1.csv', mode='w', encoding='utf-8', newline='\n')
