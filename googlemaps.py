@@ -14,12 +14,13 @@ import logging
 import traceback
 import os
 
+
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
-driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+# driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
 GM_WEBPAGE = 'https://www.google.com/maps/'
 MAX_WAIT = 10
@@ -226,7 +227,7 @@ class GoogleMapsScraper:
 
         options.add_argument("--disable-notifications")
         options.add_argument("--lang=en-GB")
-        input_driver = webdriver.Chrome(chrome_options=options)
+        input_driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
 
         return input_driver
 

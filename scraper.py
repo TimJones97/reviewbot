@@ -7,9 +7,10 @@ import os, boto3
 
 HEADER = ['id_review', 'caption', 'relative_date', 'retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user']
 HEADER_W_SOURCE = ['id_review', 'caption', 'relative_date','retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user', 'url_source']
+targetfile = open('./reviews.csv', mode='w', encoding='utf-8', newline='\n')
 
-def csv_writer(source_field, path='./', outfile='gm_reviews.csv'):
-    targetfile = open(path + outfile, mode='w', encoding='utf-8', newline='\n')
+def csv_writer(source_field):
+    # targetfile = open(path + outfile, mode='w', encoding='utf-8', newline='\n')
     writer = csv.writer(targetfile, quoting=csv.QUOTE_MINIMAL)
 
     if source_field:
@@ -21,17 +22,15 @@ def csv_writer(source_field, path='./', outfile='gm_reviews.csv'):
     return writer
 
 def sign_s3():
-  # Load necessary information into the application
-  S3_BUCKET = 'jb-review-bot'
+    # Load necessary information into the application
+    S3_BUCKET = 'jb-review-bot'
 
-  # Load required data from the request
-  file_name = 'gm_reviews.csv'
-  # file_type = 'csv'
+    # Load required data from the request
+    file_name = 'gm_reviews.csv'
 
-  # Initialise the S3 client
-  s3 = boto3.client('s3')
-  # boto3.set_stream_logger('')
-  s3.upload_file(file_name, S3_BUCKET, file_name)
+    # Initialise the S3 client
+    s3 = boto3.client('s3')
+    s3.upload_file(file_name, S3_BUCKET, file_name)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Google Maps reviews scraper.')
@@ -69,5 +68,8 @@ if __name__ == '__main__':
                                 writer.writerow(row_data)
 
                             n += len(reviews)
+            #need to close file before uploading to S3
+            targetfile.close()
+            sign_s3()
 
-    sign_s3()
+    
