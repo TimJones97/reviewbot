@@ -217,7 +217,7 @@ class GoogleMapsScraper:
 
 
     def __get_driver(self, debug=False):
-        options = Options()
+        options = chrome_options
 
         if not self.debug:
             options.add_argument("--headless")
