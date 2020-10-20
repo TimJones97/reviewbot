@@ -3,6 +3,7 @@ from googlemaps import GoogleMapsScraper
 from datetime import datetime, timedelta
 import argparse
 import csv
+import os
 
 HEADER = ['id_review', 'caption', 'relative_date', 'retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user']
 HEADER_W_SOURCE = ['id_review', 'caption', 'relative_date','retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user', 'url_source']
@@ -18,7 +19,7 @@ def csv_writer(source_field, path='./', outfile='gm_reviews.csv'):
     writer.writerow(h)
 
     return writer
-    
+
 def sign_s3():
   # Load necessary information into the application
   S3_BUCKET = os.environ.get('S3_BUCKET')
