@@ -56,3 +56,35 @@ if __name__ == '__main__':
                                 writer.writerow(row_data)
 
                             n += len(reviews)
+
+    # sign file and upload to S3 bucket afterward
+    sign_s3()
+
+def sign_s3():
+  # Load necessary information into the application
+  S3_BUCKET = os.environ.get('S3_BUCKET')
+
+  # Load required data from the request
+  file_name = 'gm_reviews.csv'
+  file_type = 'csv'
+
+  # Initialise the S3 client
+  s3 = boto3.client('s3')
+
+  # Generate and return the presigned URL
+  presigned_post = s3.generate_presigned_post(
+    Bucket = S3_BUCKET,
+    Key = file_name,
+    Fields = {"acl": "public-read", "Content-Type": file_type},
+    Conditions = [
+      {"acl": "public-read"},
+      {"Content-Type": file_type}
+    ],
+    ExpiresIn = 3600
+  )
+
+  # Return the data to the client
+  return json.dumps({
+    'data': presigned_post,
+    'url': 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, file_name)
+  })
