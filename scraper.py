@@ -34,7 +34,6 @@ def sign_s3():
   s3.upload_file(file_name, S3_BUCKET, file_name)
 
 if __name__ == '__main__':
-    # sign_s3()
     parser = argparse.ArgumentParser(description='Google Maps reviews scraper.')
     parser.add_argument('--N', type=int, default=5, help='Number of reviews to scrape')
     parser.add_argument('--i', type=str, default='urls.txt', help='target URLs file')
@@ -71,5 +70,4 @@ if __name__ == '__main__':
 
                             n += len(reviews)
 
-    sign file and upload to S3 bucket afterward
     sign_s3()
