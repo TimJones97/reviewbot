@@ -3,7 +3,7 @@ from googlemaps import GoogleMapsScraper
 from datetime import datetime, timedelta
 import argparse
 import csv
-import os
+import os, json, boto3
 
 HEADER = ['id_review', 'caption', 'relative_date', 'retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user']
 HEADER_W_SOURCE = ['id_review', 'caption', 'relative_date','retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user', 'url_source']
