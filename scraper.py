@@ -26,7 +26,7 @@ def sign_s3():
     S3_BUCKET = 'jb-review-bot'
 
     # Load required data from the request
-    file_name = 'gm_reviews.csv'
+    file_name = 'reviews.csv'
 
     # Initialise the S3 client
     s3 = boto3.client('s3')
