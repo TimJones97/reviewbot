@@ -45,7 +45,7 @@ if __name__ == '__main__':
                     if error == 0:
 
                         n = 0
-                        while n < args.N:
+                        while n < 5:
                             reviews = scraper.get_reviews(n)
 
                             for r in reviews:
