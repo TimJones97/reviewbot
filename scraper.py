@@ -4,8 +4,8 @@ from datetime import datetime, timedelta
 import argparse
 import csv
 
-HEADER = ['caption', 'relative_date', 'retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user']
-HEADER_W_SOURCE = ['caption', 'relative_date','retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user', 'url_source']
+HEADER = ['id_review', 'caption', 'relative_date', 'retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user']
+HEADER_W_SOURCE = ['id_review', 'caption', 'relative_date','retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user', 'url_source']
 
 def csv_writer(source_field, path='./', outfile='gm_reviews.csv'):
     targetfile = open(path + outfile, mode='w', encoding='utf-8', newline='\n')
@@ -22,7 +22,7 @@ def csv_writer(source_field, path='./', outfile='gm_reviews.csv'):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Google Maps reviews scraper.')
-    parser.add_argument('--N', type=int, default=100, help='Number of reviews to scrape')
+    parser.add_argument('--N', type=int, default=5, help='Number of reviews to scrape')
     parser.add_argument('--i', type=str, default='urls.txt', help='target URLs file')
     parser.add_argument('--place', dest='place', action='store_true', help='Scrape place metadata')
     parser.add_argument('--debug', dest='debug', action='store_true', help='Run scraper using browser graphical interface')
@@ -45,7 +45,7 @@ if __name__ == '__main__':
                     if error == 0:
 
                         n = 0
-                        while n < 5:
+                        while n < args.N:
                             reviews = scraper.get_reviews(n)
 
                             for r in reviews:
