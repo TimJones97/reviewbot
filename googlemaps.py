@@ -147,7 +147,8 @@ class GoogleMapsScraper:
             n_photos = 0
 
         user_url = review.find('a')['href']
-
+        user_image = review.find('img')['src']
+        
         item['id_review'] = id_review
         item['caption'] = review_text
 
@@ -161,7 +162,7 @@ class GoogleMapsScraper:
         item['rating'] = rating
         item['username'] = username
         item['n_review_user'] = n_reviews
-        item['n_photo_user'] = n_photos
+        item['user_image'] = user_image
         item['url_user'] = user_url
 
         return item
