@@ -281,7 +281,7 @@ function setRetrievalDateTime(retrievalDate){
 	if(!retrievalTimeSet){
 		// var date = new Date(retrievalDate);
 		var timeUTC = moment.utc(retrievalDate).toDate();
-		var localMinutes = moment(timeUTC).local().format('HH:mm:ss A');
+		var localMinutes = moment(timeUTC).local().format('HH:mm A');
 		var dayOfWeek = moment.utc(retrievalDate).isoWeekday();
 
 		var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
