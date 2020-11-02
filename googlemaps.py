@@ -131,20 +131,20 @@ class GoogleMapsScraper:
         rating = float(review.find('span', class_='section-review-stars')['aria-label'].split(' ')[1])
         relative_date = review.find('span', class_='section-review-publish-date').text
 
-        try:
-            n_reviews_photos = review.find('div', class_='section-review-subtitle').find_all('span')[1].text
-            metadata = n_reviews_photos.split('\xe3\x83\xbb')
-            if len(metadata) == 3:
-                n_photos = int(metadata[2].split(' ')[0].replace('.', ''))
-            else:
-                n_photos = 0
-
-            idx = len(metadata)
-            n_reviews = int(metadata[idx - 1].split(' ')[0].replace('.', ''))
-
-        except Exception as e:
-            n_reviews = 0
-            n_photos = 0
+##        try:
+##            n_reviews_photos = review.find('div', class_='section-review-subtitle').find_all('span')[1].text
+##            metadata = n_reviews_photos.split('\xe3\x83\xbb')
+##            if len(metadata) == 3:
+##                n_photos = int(metadata[2].split(' ')[0].replace('.', ''))
+##            else:
+##                n_photos = 0
+##
+##            idx = len(metadata)
+##            n_reviews = int(metadata[idx - 1].split(' ')[0].replace('.', ''))
+##
+##        except Exception as e:
+##            n_reviews = 0
+##            n_photos = 0
 
         user_url = review.find('a')['href']
         user_image = review.find('img')['src']
@@ -162,9 +162,8 @@ class GoogleMapsScraper:
         item['rating'] = rating
         item['username'] = username
         item['n_review_user'] = n_reviews
-        item['n_photos'] = n_photos
-        item['url_user'] = user_url
         item['user_image'] = user_image
+        item['url_user'] = user_url
 
         return item
 
