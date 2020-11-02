@@ -145,7 +145,7 @@ class GoogleMapsScraper:
 ##        except Exception as e:
 ##            n_reviews = 0
 ##            n_photos = 0
-
+        n_reviews = 0
         user_url = review.find('a')['href']
         user_image = review.find('img')['src']
         
