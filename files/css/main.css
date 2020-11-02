@@ -2,6 +2,7 @@
 *::-webkit-scrollbar {
   display: none;
 }
+
 body {
     background: #000;
     overflow: hidden;
@@ -34,6 +35,12 @@ p {
 .container {
     padding: 0;
     position: relative;
+    transition: all 0.6s ease;
+    transform: scale(1.0);
+}
+.container.shrink {
+    transform: scale(0.8);
+    opacity: 0.5;
 }
 .container h1 {
     text-align: center;
@@ -101,8 +108,14 @@ p {
     user-select: all;
     transition: all 0.8s ease;
 }
+.reviews_container .box .hidden_sort h4 span {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    letter-spacing: 1px;
+    font-size: 20px;
+}
 .reviews_container .box .hidden_sort .sort_btn {
-    border: 1px solid #000;
+    border: 1px solid #fff012;
     border-radius: 15px;
     display: block;
     margin: 0 auto;
@@ -110,18 +123,19 @@ p {
     text-transform: lowercase;
     width: 70px;
     height: 32px;
-    background: #fff012;
-    color: #6b6b6b;
+    background: transparent;
+    color: #fff;
     font-size: 15px;
     margin-top: 20px;
     outline: none;
-    transition: all 0.5s ease;
+    transition: all 0.5s ease, width 0.3s ease;
     user-select: none;
     backface-visibility: hidden;
 }   
 .reviews_container .box .hidden_sort .sort_btn:hover {
-    color: #000;
-    border: 1px solid #fff;
+    width: 75px;
+    background: #fff012;
+    color: #3b3b3b;
 }
 .reviews_container .box .hidden_sort .sort_type {
     margin-top: 20px;
@@ -134,6 +148,18 @@ p {
     transition: all 0.5s ease;
     transform: scale(0.8);
     user-select: none;
+}
+.reviews_container .box .hidden_sort .sort_type  span.first_identifier,
+.reviews_container .box .hidden_sort .sort_type  span.second_identifier {
+    width: 41.5px;
+    display: inline-block;
+    font-weight: 600;
+}
+.reviews_container .box .hidden_sort .sort_type  span.first_identifier {
+    text-align: center;
+}
+.reviews_container .box .hidden_sort .sort_type  span.second_identifier {
+    text-align: left;
 }
 .reviews_container .box .hidden_sort .sort_type.show {
     transform: scale(1.0);
@@ -154,6 +180,7 @@ p {
     transition: all 0.5s ease;
 }
 .review.hidden_review {
+    display: none;
     visibility: hidden;
     position: absolute;
     transition: all 0s ease;
@@ -165,6 +192,7 @@ p {
     transition: all 0s ease;
 }
 .review.hidden_review.show {
+    display: block;
     position: relative;
     visibility: visible;
 }
@@ -187,6 +215,64 @@ p {
     width: 25px;
     height: 25px;
 }
+.store_review.after_load .review {
+    opacity: 1 !important;
+    animation: none !important;
+}
+/* Rating fade in */
+.review.anim-1 {
+    opacity: 0;
+    animation: fadeInReviews 0.8s ease forwards;
+    animation-delay: 500ms;
+}
+.review.anim-2 {
+    opacity: 0;
+    animation: fadeInReviews 0.8s ease forwards;
+    animation-delay: 800ms;
+}
+.review.anim-3 {
+    opacity: 0;
+    animation: fadeInReviews 0.8s ease forwards;
+    animation-delay: 1100ms;
+}
+.review.anim-4 {
+    opacity: 0;
+    animation: fadeInReviews 0.8s ease forwards;
+    animation-delay: 1400ms;
+}
+.review.anim-5 {
+    opacity: 0;
+    animation: fadeInReviews 0.8s ease forwards;
+    animation-delay: 1700ms;
+}
+/*  Add on a class after load to decrease animation delay
+    because JQuery cannot alter pseudo class styles  
+
+/*.review.after_load:nth-child(1) {
+    opacity: 0;
+    animation: fadeInReviews 0.7s linear forwards;
+    animation-delay: 100ms;
+}
+.review.after_load:nth-child(2) {
+    opacity: 0;
+    animation: fadeInReviews 0.7s linear forwards;
+    animation-delay: 300ms;
+}
+.review.after_load:nth-child(3) {
+    opacity: 0;
+    animation: fadeInReviews 0.7s linear forwards;
+    animation-delay: 500ms;
+}
+.review.after_load:nth-child(4) {
+    opacity: 0;
+    animation: fadeInReviews 0.7s linear forwards;
+    animation-delay: 700ms;
+}
+.review.after_load:nth-child(5) {
+    opacity: 0;
+    animation: fadeInReviews 0.7s linear forwards;
+    animation-delay: 900ms;
+}*/
 .review .user_image {
     border-radius: 50%;
     display: block;
@@ -285,7 +371,7 @@ p {
     max-width: 960px;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
+    transform: translate(-50%, -50%) scale(1.3);
     opacity: 0;
     transition: all 0.6s ease;
 }
@@ -472,6 +558,16 @@ p {
     /*background: #0079c0*/
     background: #fff012;
 }
+
+@keyframes fadeInReviews {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 @media only screen and (max-height: 600px) {
     .reviews_container .row {
         max-height: 36vh;

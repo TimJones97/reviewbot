@@ -2,6 +2,7 @@ var data;
 var sorted = false;
 var emptyReviewsVisible = false;
 var retrievalTimeSet = false;
+var timeoutSortStatus;
 $.ajax({
   type: "GET",  
   url: "https://jb-review-bot.s3-ap-southeast-2.amazonaws.com/reviews1.csv",
@@ -174,6 +175,7 @@ function setRatings(){
 }
 function changeSortStatus(thisElem, isSecondBtn){
 	var interval;
+	clearTimeout(timeoutSortStatus);
 	//If the second sort button is pressed
 	//Hide the info button temporarily
 	//to prevent overlap
@@ -192,21 +194,45 @@ function changeSortStatus(thisElem, isSecondBtn){
 	}
 	if(!sorted){
 		thisElem.next().addClass('show');
-		thisElem.next().find('.first_identifier').html('worst');
-		thisElem.next().find('.second_identifier').html('best');
+		thisElem.next().find('.first_identifier').stop().animate({
+		        'opacity': 0
+		    }, 100, function() {
+	        	$(this).text('worst').animate({
+	            'opacity': 1
+	       	}, 100);
+        });
+        thisElem.next().find('.second_identifier').stop().animate({
+		        'opacity': 0
+		    }, 100, function() {
+	        	$(this).text('best').animate({
+	            'opacity': 1
+	       	}, 100);
+        });
 		sorted = true;
-		setTimeout(function(){
+		timeoutSortStatus = setTimeout(function(){
 			thisElem.next().removeClass('show');
 		}, 1200);
 	}
 	else {
 		thisElem.next().addClass('show');
-		thisElem.next().find('.first_identifier').html('best');
-		thisElem.next().find('.second_identifier').html('worst');
+		thisElem.next().find('.first_identifier').stop().animate({
+		        'opacity': 0
+		    }, 100, function() {
+	        	$(this).text('best').animate({
+	            'opacity': 1
+	       	}, 100);
+        });
+        thisElem.next().find('.second_identifier').stop().animate({
+		        'opacity': 0
+		    }, 100, function() {
+	        	$(this).text('worst').animate({
+	            'opacity': 1
+	       	}, 100);
+        });
 		sorted = false;
-		setTimeout(function(){
-			thisElem.next().removeClass('show');
-		}, 1200);
+		timeoutSortStatus = setTimeout(function(){
+			$('.sort_type').removeClass('show');
+		}, 1000);
 	}
 }
 function sortRatingsOnClick(){
@@ -220,6 +246,8 @@ function sortRatingsOnClick(){
 			}
 		}));
 		changeSortStatus($(this), false);
+		$('#csv-display-1 .store_review').removeClass('after_load');
+		$('#csv-display-1 .review').css('animation', 'fadeInReviews  0.8s ease forwards');
 	});
 	$('#sort_btn_2').click(function(){
 		$('#csv-display-2 .store_review').append($('#csv-display-2 .store_review .review').sort(function(a,b){
@@ -231,6 +259,8 @@ function sortRatingsOnClick(){
 			}
 		}));
 		changeSortStatus($(this), true);
+		$('#csv-display-2 .store_review').removeClass('after_load');
+		$('#csv-display-2 .review').css('animation', 'fadeInReviews  0.8s ease forwards');
 	});
 	$('#sort_btn_3').click(function(){
 		$('#csv-display-3 .store_review').append($('#csv-display-3 .store_review .review').sort(function(a,b){
@@ -242,6 +272,8 @@ function sortRatingsOnClick(){
 			}
 		}));
 		changeSortStatus($(this), false);
+		$('#csv-display-3 .store_review').removeClass('after_load');
+		$('#csv-display-3 .review').css('animation', 'fadeInReviews  0.8s ease forwards');
 	});
 }
 function setRetrievalDateTime(retrievalDate){
@@ -256,12 +288,14 @@ function setRetrievalDateTime(retrievalDate){
 function toggleInformation(){
 	$('.information').click(function(){
 		if($('.information_description').hasClass('show')){
+			$('.container').removeClass('shrink');
 			$('.close_btn').removeClass('show');
 			$('.info_btn').addClass('show');
 			$('.information_description').removeClass('show');
 			$('.what_text').addClass('show');
 		}
 		else {
+			$('.container').addClass('shrink');
 			$('.info_btn').removeClass('show');
 			$('.close_btn').addClass('show');
 			$('.information_description').addClass('show');
@@ -275,13 +309,17 @@ function hideEmptyReviews(){
   			$(this).addClass('hidden_review');
   			$(this).attr('data-caption', false);
   		}
+  		else {
+  			$(this).addClass('visible_review');
+  		}
 	});
 }
-function showEmptyReviews(){
+function showEmptyReviewsOnClick(){
 	$('.container h1').click(function(){
 		var headerText = '';
 		$('.review').each(function(){
 	  		if($(this).attr('data-caption') == 'false'){
+	  			$(this).outerWidth();
 	  			$(this).toggleClass('show');
 	  			if($(this).hasClass('show')){
 	  				emptyReviewsVisible = true;
@@ -328,6 +366,7 @@ function showEmptyReviews(){
 }
 
 $(document).ready(function(){
+	//Fade out the loader splash
 	setTimeout(function(){
 		$('#maskoverlay').css('opacity', '0');
 	}, 1500);
@@ -335,8 +374,46 @@ $(document).ready(function(){
 		$('#maskoverlay').css('display', 'none');
 	}, 2200);
 	setTimeout(function(){
+		// Add class to ratings for fade in effect
+		var index = 1;
+		$('#csv-display-1').find('.visible_review').each(function(){
+			$(this).addClass('anim-' + index);
+			index++;
+		});
+		var index = 1;
+		$('#csv-display-2').find('.visible_review').each(function(){
+			$(this).addClass('anim-' + index);
+			index++;
+		});
+		var index = 1;
+		$('#csv-display-3').find('.visible_review').each(function(){
+			$(this).addClass('anim-' + index);
+			index++;
+		});
+	}, 1200);
+	setTimeout(function(){
+		// Remove fade in class
+		var index = 1;
+		$('#csv-display-1').find('.visible_review').each(function(){
+			$(this).removeClass('anim-' + index);
+			index++;
+		});
+		var index = 1;
+		$('#csv-display-2').find('.visible_review').each(function(){
+			$(this).removeClass('anim-' + index);
+			index++;
+		});
+		var index = 1;
+		$('#csv-display-3').find('.visible_review').each(function(){
+			$(this).removeClass('anim-' + index);
+			index++;
+		});
+		$('.store_review').addClass('after_load');
+		// Add class to ratings to decrease animation-delay time for fade-in of stars
+	}, 3000);
+	setTimeout(function(){
 		hideEmptyReviews();
-		showEmptyReviews();
+		showEmptyReviewsOnClick();
 		$('#csv-display-3').css('height', $('#csv-display-1').outerHeight() + 'px');
 		setRatings();
 		sortRatingsOnClick();
