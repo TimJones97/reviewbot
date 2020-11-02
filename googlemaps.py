@@ -162,8 +162,9 @@ class GoogleMapsScraper:
         item['rating'] = rating
         item['username'] = username
         item['n_review_user'] = n_reviews
-        item['user_image'] = user_image
+        item['n_photos'] = n_photos
         item['url_user'] = user_url
+        item['user_image'] = user_image
 
         return item
 

@@ -5,8 +5,8 @@ import argparse
 import csv
 import os, boto3
 
-HEADER = ['id_review', 'caption', 'relative_date', 'retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user']
-HEADER_W_SOURCE = ['id_review', 'caption', 'relative_date','retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user', 'url_source']
+HEADER = ['id_review', 'caption', 'relative_date', 'retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user', 'user_image']
+HEADER_W_SOURCE = ['id_review', 'caption', 'relative_date','retrieval_date', 'rating', 'username', 'n_review_user', 'n_photo_user', 'url_user', 'user_image', 'url_source']
 targetfile = open('./reviews1.csv', mode='w', encoding='utf-8', newline='\n')
 
 def csv_writer(source_field):
@@ -25,7 +25,7 @@ def sign_s3():
     # Load necessary information into the application
     S3_BUCKET = 'jb-review-bot'
 
-    # Load required data from the request
+    # Load required files for the request
     file_name1 = 'reviews1.csv'
     file_name2 = 'reviews2.csv'
     file_name3 = 'reviews3.csv'
