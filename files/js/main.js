@@ -279,9 +279,13 @@ function sortRatingsOnClick(){
 function setRetrievalDateTime(retrievalDate){
 	//Show retrieval time
 	if(!retrievalTimeSet){
-		var date = new Date(retrievalDate + ' GMT');
+		// var date = new Date(retrievalDate);
+		var timeUTC = moment.utc(retrievalDate).toDate();
+		var localMinutes = moment(timeUTC).local().format('HH:mm:ss A');
+		var dayOfWeek = moment.utc(retrievalDate).isoWeekday();
+
 		var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-		$('.updated_time span').html(days[date.getDay()] + " " + date.toLocaleTimeString());
+		$('.updated_time span').html(days[dayOfWeek] + " " + localMinutes);
 		retrievalTimeSet = true;
 	}
 }
