@@ -284,8 +284,9 @@ function setRetrievalDateTime(retrievalDate){
 		var localMinutes = moment(timeUTC).local().format('HH:mm A');
 		var dayOfWeek = moment.utc(retrievalDate).isoWeekday();
 
-		var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-		$('.updated_time span').html(days[dayOfWeek] + " " + localMinutes);
+		var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+		$('.updated_time span').html(days[dayOfWeek - 1] + " " + localMinutes);
 		retrievalTimeSet = true;
 	}
 }
@@ -421,7 +422,6 @@ $(document).ready(function(){
 		$('#csv-display-3').css('height', $('#csv-display-1').outerHeight() + 'px');
 		setRatings();
 		sortRatingsOnClick();
-		setRetrievalDateTime();
 	}, 1000);
 	toggleInformation()
 	createSlickSlider();
