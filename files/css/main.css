@@ -2,7 +2,6 @@
 *::-webkit-scrollbar {
   display: none;
 }
-
 body {
     background: #000;
     overflow: hidden;
@@ -36,7 +35,7 @@ p {
 .by_line a {
     font-weight: 600;
     font-family: inherit;
-    text-decoration: underline;
+    text-decoration: none;
     color: #fff;
 }
 .divider {
@@ -657,21 +656,9 @@ p {
     .reviews_container .row {
         max-height: 68vh;
     }
-    .reviews_container .box h4 {
-        display: none !important;
-    }
     .slick-slider {
         margin-bottom: 0px !important;
         padding-bottom: 30px;
-    }
-    .reviews_container .box .sort_type {
-        display: none;
-    }
-    .reviews_container .box .sort_btn {
-        opacity: 0 !important;
-    }
-    .reviews_container .box .hidden_sort {
-        opacity: 0;
     }
     .information_description .hide_text {
         width: 100%;
@@ -705,9 +692,6 @@ p {
     }
     .slick-dots {
         bottom: -5px !important;
-    }
-    .reviews_container .box .hidden_sort {
-        display: none;
     }
     .information {
         transform: translate(-50%, -170px) scale(1.0);
@@ -745,7 +729,7 @@ p {
         width: 345px;
     }
     .reviews_container .row {
-        max-height: 60vh;
+        max-height: 50vh;
     }
     .reviews_container .caption {
         font-size: 15px;
@@ -770,6 +754,12 @@ p {
     }
     .info_container {
         font-size: 13px;
+    }
+    .information.show {
+        display: none !important;
+    }
+    .slick-dots {
+        display: none !important;
     }
 }
 @media only screen and (max-width: 360px) {
