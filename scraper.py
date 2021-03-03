@@ -7,8 +7,7 @@ import os, boto3
 
 HEADER = ['id_review', 'caption', 'relative_date', 'retrieval_date', 'rating', 'username', 'n_review_user', 'user_image', 'url_user']
 HEADER_W_SOURCE = ['id_review', 'caption', 'relative_date','retrieval_date', 'rating', 'username', 'n_review_user', 'user_image', 'url_user', 'url_source']
-#targetfile = open('./reviews1.csv', mode='w', encoding='utf-8', newline='\n')
-
+# targetfile = open('./reviews1.csv', mode='w', encoding='utf-8', newline='\n')
 def csv_writer(source_field):
     targetfile = open(source_field, mode='w', encoding='utf-8', newline='\n')
     writer = csv.writer(targetfile, quoting=csv.QUOTE_MINIMAL)
@@ -63,19 +62,16 @@ if __name__ == '__main__':
                         n = 0
                         while n < args.N:
                             reviews = scraper.get_reviews(n)
-
                             for r in reviews:
                                 row_data = list(r.values())
                                 if args.source:
                                     row_data.append(url)
-
                                 writer.writerow(row_data)
-
                             n += len(reviews)
+                counter += 1
                 # dirty hack to close previous reviews.csv by creating a new one
                 current_file = 'reviews' + str(counter) + '.csv'
                 writer = csv_writer(current_file)
-                counter += 1
 
             #need to close file before uploading to S3
             sign_s3()
