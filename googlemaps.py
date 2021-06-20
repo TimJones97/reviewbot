@@ -193,7 +193,7 @@ class GoogleMapsScraper:
 
 
     def __scroll(self):
-        scrollable_div = self.driver.find_element_by_css_selector('div.section-layout.section-scrollbox.scrollable-y.scrollable-show')
+        scrollable_div = self.driver.find_element_by_css_selector('div.section-layout.section-scrollbox')
         self.driver.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', scrollable_div)
 
 
